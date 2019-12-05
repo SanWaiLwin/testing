@@ -41,7 +41,7 @@ public class NoteController {
 	// Get a Single Note
 	@GetMapping("/notes/{id}")
 	public Note getNoteById(@PathVariable(value = "id") Long noteId) {
-		return noteRepository.findById(noteId).orElseThrow(() -> new ResourceNotFoundException("Note", "id", noteId));
+		return noteRepository.findById(noteId).orElseThrow(() -> new ResourceNotFoundException("Note id"+ noteId +" not found"));
 	}
 
 	// Update a Note
@@ -49,7 +49,7 @@ public class NoteController {
 	public Note updateNote(@PathVariable(value = "id") Long noteId, @Valid @RequestBody Note noteDetails) {
 
 		Note note = noteRepository.findById(noteId)
-				.orElseThrow(() -> new ResourceNotFoundException("Note", "id", noteId));
+				.orElseThrow(() -> new ResourceNotFoundException("id"+ noteId +" not found"));
 
 		note.setTitle(noteDetails.getTitle());
 		note.setContent(noteDetails.getContent());
@@ -62,7 +62,7 @@ public class NoteController {
 	@DeleteMapping("/notes/{id}")
 	public ResponseEntity<?> deleteNote(@PathVariable(value = "id") Long noteId) {
 		Note note = noteRepository.findById(noteId)
-				.orElseThrow(() -> new ResourceNotFoundException("Note", "id", noteId));
+				.orElseThrow(() -> new ResourceNotFoundException("Note id"+ noteId +" not found"));
 
 		noteRepository.delete(note);
 
